@@ -17,7 +17,7 @@ let ScreenW = window.innerWidth;
 let ScreenH = window.innerHeight;
 let ARatio = ScreenW/ScreenH;
 camera = new THREE.PerspectiveCamera(70, ARatio,0.1, 1000 );
-camera.position.set(100, 0, 100);
+camera.position.set(150, 0, 150);
 
 scene.add(camera)
 
@@ -32,7 +32,7 @@ const controls = new OrbitControls( camera, renderer.domElement )
 //create donut materials
 let dMaterial, iMaterial, eMaterial
 dMaterial= new THREE.MeshStandardMaterial({
-    color: 0xd99d68, metalness:0.0, roughness:0.2
+    color: 0xd99d68, roughness:0.2
 })
 
 iMaterial= new THREE.MeshStandardMaterial({
@@ -58,7 +58,7 @@ loader.setLibraryPath( 'https://cdn.jsdelivr.net/npm/rhino3dm@0.13.0/' )
 var allDonut;
 loader.load( 'Donut.3dm', function ( object, animate) {
 
-    document.getElementById('loader').remove()
+    
     let Donut = object.getObjectByName('Donut')
     let Icing = object.getObjectByName('Icing')
     let Decor = object.getObjectByName('Decor')
@@ -70,11 +70,12 @@ loader.load( 'Donut.3dm', function ( object, animate) {
     allDonut.add(Donut)
     allDonut.add(Icing)
     allDonut.add(Decor)
-  
+    document.getElementById('loader').remove()
+    
     scene.add(allDonut)
     function animate() {
         requestAnimationFrame( animate );
-        allDonut.rotation.y += 0.01
+        //allDonut.rotation.y += 0.01
         allDonut.rotation.z += 0.01
         renderer.render( scene, camera )}
         
@@ -82,14 +83,19 @@ animate()
     }, function(){document.getElementById('loader').innerHTML='in progress'
 })
 
+
    // scene.add( object)}, 
    
 //add directional light to the model;
 const directionalLight = new THREE.DirectionalLight( 0xffffff )
 directionalLight.intensity = 2
+directionalLight.position.z = 100
 scene.add( directionalLight )
 
-
+const directionalLight2 = new THREE.DirectionalLight( 0xffffff )
+directionalLight.intensity = 2
+directionalLight.position.z = -100
+scene.add( directionalLight2 )
 
 
 
